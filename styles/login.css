@@ -1,3 +1,9 @@
+body{
+    margin:  0;
+    box-sizing: border-box;
+    color: #E0E0E0;
+}
+
 main{
     width: 100vw;
     height: 100vh;
@@ -7,15 +13,85 @@ main{
 }
 
 .auth{
-    width: 100%;
-    height: 50%;
+    width: 50%;
+    height: 100%;
 
     display: flex;
 
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 5%;
     align-items: center;
 
-    background: linear-gradient(180deg, #222222 0%, #000000 100%);
+    background: linear-gradient(180deg, #33383D 0%, #1C1D20 100%);
 }
 
+
+.welcome{
+    width: 40%;
+    height: 20%;
+    
+}
+
+.welcome__subtitle{
+    width: 80%;
+}
+
+.container__login{
+    width: 40%;
+    height: 30%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly
+}
+
+.login__box, .pass__box{
+    width: 100%;
+    height: 20%;
+    
+}
+
+input{
+    width: 90%;
+    height: 80%;
+
+    border: 1px solid #FFFFFF;
+    border-radius: 50px;
+    padding: 0 10% 0 5%;
+    box-sizing: border-box;
+
+    background: #26292C;
+}
+
+.icon{
+    right: 0;
+    height: 35%;
+}
+
+
+
+button{
+    width: 40%;
+    height: 5%;
+    border: none;
+
+    color: #FFFFFF;
+    font-weight: 700;
+
+    background: linear-gradient(90deg, #FF2D04 0%, #C13216 100%);
+    box-shadow: inset 5px 5px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 50px;
+}
+
+.image{
+    width: 50%;
+    height: 100%;
+
+    overflow: hidden;
+}
+
+.logo-compass{
+    width: 100%;
+    height: 100%;
+}
