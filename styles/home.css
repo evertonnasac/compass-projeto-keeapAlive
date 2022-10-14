@@ -33,10 +33,21 @@ header{
     font-size: 14px;
 }
 
+.header__city-container{
+    width:15%;
+    text-align: center;
+}
+
 .header__city{
     font-size: 14px;
 }
-.header__wherever-container p{
+
+
+.header__weather-container{
+    vertical-align: top;
+}
+
+.header__weather-container p{
     display: inline-block;
     font-size: 24px;
     font-weight: 700;
@@ -168,8 +179,9 @@ footer{
     font-size: 12px;
     text-align: center;
 
+    vertical-align: middle;
+    display: table-cell;
 
-    
 }
 
 .footer__links-container a:first-child{
