@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body{
+    width: 100vw;
+    height: 100vh;
+
+    margin:  0;
+    box-sizing: border-box;
+    font-family: "Poppins";
+}
+
+p{
+    margin: 0;
+}
+
+header{
+    width: 90%;
+    height: 15%;
+
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header__hour{
+    height: 80%;
+    text-align: center;
+    font-size: 10vh;
+    font-weight: 700;
+}
+
+.header__date{
+    font-size: 14px;
+}
+
+.header__city{
+    font-size: 14px;
+}
+.header__wherever-container p{
+    display: inline-block;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+
+main{
+    width: 100%;
+    height: 75%;
+
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+aside{
+    width: 30%;
+    height: 100%;
+   
+
+}
+
+aside img{
+    width: 100%;
+    height: 100%;
+
+    z-index: -10;
+
+    position: relative;
+    top: 8%;
+
+}
+
+
+
+.main__container{
+    width: 60%;
+    height: 100%;
+
+    text-align: end;
+}
+
+.main__container p{
+    font-weight: 700;
+    
+}
+
+.main__container p:first-child{
+    font-size: 24px;
+    color: #C12D18;
+}
+
+.main__container p:nth-child(even){
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 400;
+    
+}
+
+.main__container p:nth-child(2n + 3){
+    font-size: 36px;
+    color: #C12D18;
+}
+
+
+
+footer{
+    width: 100%;
+    height: 10%;
+
+    display: flex; 
+    justify-content: flex-end;
+    align-items: center;
+
+
+    background: linear-gradient(90.16deg, #33383D 0%, #1C1D20 100%);
+
+    color: #fff;
+}
+
+.footer__message{
+    
+    width: 40%;
+
+    font-size: 10px;
+    text-align: end;
+
+    padding-right: 2% ;
+    border-right: 1px solid #fff;
+
+   
+    
+
+}
+
+.footer__time-container{
+    width: 20%;
+    height: 80%;
+
+    margin-left: 2%;
+    font-size: 10px;
+
+    display: flex;
+    gap: 10px;
+
+    align-items: center;
+}
+
+.footer__time-container p:first-child{
+    width: 30%;
+
+}
+
+.footer__time-container > .footer__time{
+    font-size: 24px;
+  
+}
+
+.footer__links-container{
+    width: 20%;
+    height: 100%;
+
+    display: flex;
+}
+
+.footer__links-container a {
+    width: 50%;
+    text-decoration: none;
+    font-size: 12px;
+    text-align: center;
+
+
+    
+}
+
+.footer__links-container a:first-child{
+
+    background: #fff;
+    color: #C13216;
+    
+}
+
+.footer__links-container a:nth-child(2){
+    color: #fff;
+
+}
+
