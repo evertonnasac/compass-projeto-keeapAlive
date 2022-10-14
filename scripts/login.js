@@ -28,7 +28,10 @@ const auth = (login, password) =>{
 
    
     if((login == user.login ) && (password == user.password)){
-        console.log("logado")
+
+        localStorage.setItem("login", JSON.stringify(user))
+        
+        location.href = "./pages/home.html"
 
     }
     else{
