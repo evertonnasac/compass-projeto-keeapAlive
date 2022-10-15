@@ -1,5 +1,6 @@
 //TRATAR O CATCH DAS PROMISES
 //TRATAR O LOGOUT COM LOCALSTORAGE
+//CORRIGIR POSIONAMENTO DOS LINKS DO FOOTER
 
 //Pegando a referência dos elementos do HTML
 const $ = document.querySelector.bind(document)
@@ -10,6 +11,7 @@ const pDate = $(".header__date")
 //const pWeather = $(".info-weather")
 //const imgIconWeather = $(".icon-weather")
 const pTimeFooter = $(".footer__time")
+const btnLogout = $(".footer__logout")
 
 
 //Tempo da sessão 
@@ -229,9 +231,13 @@ const setTimeOutSession = () =>{
 
 }
 
-const logout = () =>{
+const logout = (save = false) =>{
 
-    localStorage.removeItem("login")
+    if(!save){
+
+        localStorage.removeItem("login")
+    }
+
     location.href = "../../index.html"
 }
 
@@ -244,5 +250,11 @@ const init = () =>{
 
 
 init()
+
+
+btnLogout.addEventListener("click", ()=>{
+    let opt = confirm("Deseja manter os dados salvos?")
+    logout(opt)
+})
 
 

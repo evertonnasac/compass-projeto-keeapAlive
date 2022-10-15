@@ -10,6 +10,17 @@ let user = {
     password: "admin"
 }
 
+const getLocalStorage = () => {
+    let userSave = JSON.parse(localStorage.getItem("login"))
+
+    if(userSave){
+        inputLogin.value = userSave.login
+        inputPass.value = userSave.password
+
+        iconLogin.classList.add("icon-animation")
+        iconPass.classList.add("icon-animation")
+    }
+}
 
 const getInputs = () =>{
 
@@ -99,5 +110,7 @@ inputPass.addEventListener("keyup", function(e){
         getInputs()
     }
 })
+
+getLocalStorage()
 
 btnContinue.addEventListener("click", getInputs)
