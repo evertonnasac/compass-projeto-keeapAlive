@@ -6,10 +6,11 @@ const $ = document.querySelector.bind(document)
 
 const pHour = $(".header__hour")
 const pDate = $(".header__date")
-const pCity = $(".header__city")
-const pWeather = $(".info-weather")
-const imgIconWeather = $(".icon-weather")
+//const pCity = $(".header__city")
+//const pWeather = $(".info-weather")
+//const imgIconWeather = $(".icon-weather")
 const pTimeFooter = $(".footer__time")
+
 
 //Tempo da sessão 
 let timeSession = 5
@@ -35,8 +36,17 @@ const geoSuccess = (position) =>{
 
 //Tratamento de erro da localização
 const geoError = () =>{
-    console.log("Error")
+
+    const divCityContainer = $(".header__city-container")
+
+    const render = `<img src = "../../images/warning.png" class = "icon-error">
+                    <p class ="header__city">Localização não encontrada<p>`
+
+    divCityContainer.innerHTML = render
+    
 }
+
+
 
 
 /*Configutração dos parâmetros para consultar a API do tempo:
@@ -59,7 +69,8 @@ const getWeather = (lat, lon)=>{
 
     //Fazendo as chamadas das APIs para consultar o tempo e o nome da cidade
     Promise.all([fetchApi(urlWeather), fetchApi(urlLocale)])
-    .then(values => filterDataWeather(values))
+        .then(values => filterDataWeather(values))
+        .catch(geoError)
 }
 
 //Faz a requisição da API do tempo
@@ -80,14 +91,16 @@ const filterDataWeather = (values) => {
 
    console.log(city[0].state.toLowerCase())
 
+   //Verificando se tem a propriedade estado na resposta da API
     city[0].hasOwnProperty("state") ? 
-    stateInitial = getState(city[0].state.toLowerCase()) : stateInitial = ""
+        stateInitial = getState(city[0].state.toLowerCase()) : 
+        stateInitial = ""
 
     console.log(weat, city)
     
     let infoWeather = {
         weather : Math.trunc(weat.main.temp), //Temperatura em celcius
-        city: `${city[0].name} - ${stateInitial}`, //Sigla do estado
+        city: `${city[0].name}${stateInitial}`, //Nome da cidade e a sigla do estado
         icon: weat.weather[0].icon //codigo do incone do tempo
     }
 
@@ -95,36 +108,39 @@ const filterDataWeather = (values) => {
     renderWeather(infoWeather)
 }
 
+/*Retornando a sigla dos estados brasileiros, pois a API de geolocalização
+     nao usada, nao retorna a sigla */
 const getState = (state) => {
 
     const initials = {
-        "acre" : "AC",
-        "alagoas" :	 "AL",
-        "amapá"	: "AP",
-        "amazonas" : "AM",
-        "bahia"	: "BA",
-        "Ceará" :"CE",
-        "distrito Federal" : "DF",
-        "espírito Santo":"ES",
-        "goiás"	: "GO",
-        "maranhão" : "MA",
-        "mato Grosso" :	 "MT",
-        "mato Grosso do Sul" : "MS",
-        "minas Gerais" : "MG",
-        "pará" : "PA",
-        "paraíba" :	 "PB",
-        "paraná" : "PR",
-        "pernambuco" : "PE",
-        "piauí"	: "PI",
-        "pio de Janeiro" : "RJ",
-        "rio Grande do Norte" :	 "RN",
-        "rio Grande do Sul " :	 "RS",
-        "rondônia"	: "RO",
-        "roraima" : "RR",
-        "santa Catarina ": "SC",
-        "são Paulo"	: "SP",
-        "sergipe" :	 "SE",
-        "tocantins"	 : "TO"
+
+        "acre" : "- AC",
+        "alagoas" :	 "- AL",
+        "amapá"	: " - AP",
+        "amazonas" : " - AM",
+        "bahia"	: " - BA",
+        "ceará" :" - CE",
+        "distrito federal" : " - DF",
+        "espírito santo":" - ES",
+        "goiás"	: " - GO",
+        "maranhão" : " - MA",
+        "mato grosso" :	 " - MT",
+        "mato grosso do sul" : " - MS",
+        "minas gerais" : " - MG",
+        "pará" : " - PA",
+        "paraíba" :	 " - PB",
+        "paraná" : " - PR",
+        "pernambuco" : " - PE",
+        "piauí"	: " - PI",
+        "pio de janeiro" : " - RJ",
+        "rio grande do norte" :	 " - RN",
+        "rio grande do sul " :	 " - RS",
+        "rondônia"	: " - RO",
+        "roraima" : " - RR",
+        "santa catarina ": " - SC",
+        "são paulo"	: " - SP",
+        "sergipe" :	 " - SE",
+        "tocantins"	 : " - TO"
 
     }
 
@@ -134,9 +150,24 @@ const getState = (state) => {
 
 //Injeta os dados do tempo no HTML
 const renderWeather = ({weather, city, icon }) =>{
+
+    const divCityContainer = $(".header__city-container")
+    console.log(divCityContainer)
+    
+    const render = `<p class="header__city">${city}</p>
+    <div class="header__weather-container">
+        <img src = http://openweathermap.org/img/wn/${icon}.png alt="Incone" class="icon-weather">
+        <p class="info-weather">${weather}°</p>
+    </div>`
+
+    /*
+
     pCity.innerHTML = city
-    imgIconWeather.setAttribute("src",`http://openweathermap.org/img/wn/${icon}.png`)
+    imgIcon.setAttribute("src",`http://openweathermap.org/img/wn/${icon}.png`)
     pWeather.innerHTML = weather + "°"
+    */
+
+    divCityContainer.innerHTML = render
 
 }
 
@@ -213,3 +244,5 @@ const init = () =>{
 
 
 init()
+
+

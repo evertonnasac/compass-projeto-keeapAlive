@@ -56,6 +56,26 @@ header{
     font-weight: 700;
 }
 
+.icon-error{
+    width: 25px;
+    height: 25px;
+}
+
+.spinner {
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #C12D18;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 0.5s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
 
 main{
     width: 100%;
