@@ -13,7 +13,6 @@ let timeSession = 5
 pTimeFooter.innerHTML = timeSession
 
 
-
 //Pegando a localização do dispositivo
 const getLocation = () =>{
     if(navigator.geolocation){
@@ -64,9 +63,9 @@ const getWeather = (lat, lon)=>{
 const fetchApi = (url) => {
 
     return fetch(url)
-    .then(resp => resp.json())
-    .then(data => data)
-    .catch()
+            .then(resp => resp.json())
+            .then(data => data)
+            .catch()
 
 }
 
@@ -79,8 +78,8 @@ const filterDataWeather = (values) => {
     
     let infoWeather = {
         weather : Math.trunc(weat.main.temp), //Temperatura em celcius
-        city: city[0].name + " " +city[0].state.slice(0,2).toUpperCase(), //Sigla do estado
-        icon: weat.weather[0].icon //url do incone do tempo
+        city: `${city[0].name} - ${city[0].state.slice(0, 2).toUpperCase()}`, //Sigla do estado
+        icon: weat.weather[0].icon //codigo do incone do tempo
     }
 
     //Chamando a função que renderiza os dados passados no parâmertro
@@ -91,39 +90,40 @@ const filterDataWeather = (values) => {
 const renderWeather = ({weather, city, icon }) =>{
     pCity.innerHTML = city
     imgIconWeather.setAttribute("src",`http://openweathermap.org/img/wn/${icon}.png`)
-    pWeather.innerHTML = weather + " °"
+    pWeather.innerHTML = weather + "°"
 
 }
 
 //Criando as configurações de data e hora
 const getDateTime = (() =>{
     
-    const optionDate = {
-        year: 'numeric',
-        month: 'long',
-        day: "numeric",
-    }
-
-    const optionTime = {
-        hour : "numeric",
-        minute : "numeric"
-
-    }
-
-    let date = new Date().toLocaleDateString('pt-br', optionDate)
-    let time = new Date().toLocaleTimeString("pt-br", optionTime)
+    return{
+        
+        optionDate : {
+            year: 'numeric',
+            month: 'long',
+            day: "numeric",
+        },
     
-    return {
-        date, time
+        optionTime : {
+            hour : "numeric",
+            minute : "numeric"
+    
+        }
+
     }
+
 
 })()
 
 
 const setDateTime = () =>{
 
-    pHour.innerHTML = getDateTime.time
-    pDate.innerHTML = getDateTime.date
+    let date = new Date().toLocaleDateString('pt-br', getDateTime.optionDate)
+    let time = new Date().toLocaleTimeString("pt-br", getDateTime.optionTime)
+
+    pHour.innerHTML = time
+    pDate.innerHTML = date
 }
 
 /*const getTimeSession =  setInterval(() => {
