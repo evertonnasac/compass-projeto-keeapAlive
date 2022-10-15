@@ -30,7 +30,7 @@ const auth = (login, password) =>{
     if((login == user.login ) && (password == user.password)){
 
         localStorage.setItem("login", JSON.stringify(user))
-        
+
         location.href = "./pages/home.html"
 
     }
