@@ -12,12 +12,15 @@ const pTimeFooter = $(".footer__time")
 let timeSession = 5
 pTimeFooter.innerHTML = timeSession
 
+
+
 //Pegando a localização do dispositivo
 const getLocation = () =>{
     if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(geoSuccess, geoError)
     }
 }
+
 
 //Tratamento de sucesso da localização
 const geoSuccess = (position) =>{
@@ -27,42 +30,57 @@ const geoSuccess = (position) =>{
     getWeather(position.coords.latitude, position.coords.longitude)
 }
 
+
 //Tratamento de erro da localização
 const geoError = () =>{
     console.log("Error")
 }
 
-//Configutração dos parâmetros para consultar a APO do tempo
+
+/*Configutração dos parâmetros para consultar a API do tempo:
+    é necessário duas requisições - uma para consultar o tempo
+    e outra para consultar o nome da cidade e a sigla do estado com precisão,
+    pois a API do tempo não traz o nome correto da cidade e nem a sigla do estado */
 const getWeather = (lat, lon)=>{
 
     const key = "c85c800507b036d7fa63f60c7a49ed39"
     const lang = "pt-br"
 
-    const url = 
+    //URI da api do tempo
+    const urlWeather = 
     `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}`+
     `&appid=${key}&lang=${lang}&units=metric`
 
-    //chamando a função que faz a requisição da API do tempo
-    fetchApi(url)
+    //URI da API geolocalização
+    const urlLocale = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}`+
+    `&lon=${lon}&limit=${1}&appid=${key}`
+
+    //Fazendo as chamadas das APIs para consultar o tempo e o nome da cidade
+    Promise.all([fetchApi(urlWeather), fetchApi(urlLocale)])
+    .then(values => filterDataWeather(values))
 }
 
-//Requisição da API do tempo
+//Faz a requisição da API do tempo
 const fetchApi = (url) => {
 
-    fetch(url)
+    return fetch(url)
     .then(resp => resp.json())
-    .then(data => filterDataWeather(data))
+    .then(data => data)
     .catch()
 
 }
 
 //Trata os dados da consulta da API do tempo
-const filterDataWeather = ({main, name, weather}) => {
+const filterDataWeather = (values) => {
 
+   let [weat, city] = values
+
+    console.log(weat, city)
+    
     let infoWeather = {
-        weather : Math.trunc(main.temp),
-        city: name,
-        icon: weather[0].icon
+        weather : Math.trunc(weat.main.temp), //Temperatura em celcius
+        city: city[0].name + " " +city[0].state.slice(0,2).toUpperCase(), //Sigla do estado
+        icon: weat.weather[0].icon //url do incone do tempo
     }
 
     //Chamando a função que renderiza os dados passados no parâmertro
@@ -108,7 +126,7 @@ const setDateTime = () =>{
     pDate.innerHTML = getDateTime.date
 }
 
-const getTimeSession =  setInterval(() => {
+/*const getTimeSession =  setInterval(() => {
 
     if(timeSession > 0){
         pTimeFooter.innerHTML = --timeSession
@@ -116,7 +134,7 @@ const getTimeSession =  setInterval(() => {
     else{
         setTimeOutSession()
     }
-}, 1000);
+}, 1000);*/
 
 
 const setTimeOutSession = () =>{
