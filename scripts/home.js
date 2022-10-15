@@ -1,3 +1,6 @@
+//TRATAR O CATCH DAS PROMISES
+//TRATAR O LOGOUT COM LOCALSTORAGE
+
 //Pegando a referência dos elementos do HTML
 const $ = document.querySelector.bind(document)
 
@@ -73,17 +76,60 @@ const fetchApi = (url) => {
 const filterDataWeather = (values) => {
 
    let [weat, city] = values
+   let stateInitial
+
+   console.log(city[0].state.toLowerCase())
+
+    city[0].hasOwnProperty("state") ? 
+    stateInitial = getState(city[0].state.toLowerCase()) : stateInitial = ""
 
     console.log(weat, city)
     
     let infoWeather = {
         weather : Math.trunc(weat.main.temp), //Temperatura em celcius
-        city: `${city[0].name} - ${city[0].state.slice(0, 2).toUpperCase()}`, //Sigla do estado
+        city: `${city[0].name} - ${stateInitial}`, //Sigla do estado
         icon: weat.weather[0].icon //codigo do incone do tempo
     }
 
     //Chamando a função que renderiza os dados passados no parâmertro
     renderWeather(infoWeather)
+}
+
+const getState = (state) => {
+
+    const initials = {
+        "acre" : "AC",
+        "alagoas" :	 "AL",
+        "amapá"	: "AP",
+        "amazonas" : "AM",
+        "bahia"	: "BA",
+        "Ceará" :"CE",
+        "distrito Federal" : "DF",
+        "espírito Santo":"ES",
+        "goiás"	: "GO",
+        "maranhão" : "MA",
+        "mato Grosso" :	 "MT",
+        "mato Grosso do Sul" : "MS",
+        "minas Gerais" : "MG",
+        "pará" : "PA",
+        "paraíba" :	 "PB",
+        "paraná" : "PR",
+        "pernambuco" : "PE",
+        "piauí"	: "PI",
+        "pio de Janeiro" : "RJ",
+        "rio Grande do Norte" :	 "RN",
+        "rio Grande do Sul " :	 "RS",
+        "rondônia"	: "RO",
+        "roraima" : "RR",
+        "santa Catarina ": "SC",
+        "são Paulo"	: "SP",
+        "sergipe" :	 "SE",
+        "tocantins"	 : "TO"
+
+    }
+
+    return initials[state] || ""
+
 }
 
 //Injeta os dados do tempo no HTML
