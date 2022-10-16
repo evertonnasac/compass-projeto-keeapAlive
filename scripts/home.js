@@ -1,6 +1,3 @@
-//TRATAR O CATCH DAS PROMISES
-//TRATAR O LOGOUT COM LOCALSTORAGE
-//CORRIGIR POSIONAMENTO DOS LINKS DO FOOTER
 
 //Pegando a referência dos elementos do HTML
 const $ = document.querySelector.bind(document)
@@ -15,7 +12,7 @@ const btnLogout = $(".footer__logout")
 
 
 //Tempo da sessão 
-let timeSession = 5
+let timeSession = 10
 pTimeFooter.innerHTML = timeSession
 
 
@@ -162,13 +159,6 @@ const renderWeather = ({weather, city, icon }) =>{
         <p class="info-weather">${weather}°</p>
     </div>`
 
-    /*
-
-    pCity.innerHTML = city
-    imgIcon.setAttribute("src",`http://openweathermap.org/img/wn/${icon}.png`)
-    pWeather.innerHTML = weather + "°"
-    */
-
     divCityContainer.innerHTML = render
 
 }
@@ -205,7 +195,7 @@ const setDateTime = () =>{
     pDate.innerHTML = date
 }
 
-/*const getTimeSession =  setInterval(() => {
+const getTimeSession =  setInterval(() => {
 
     if(timeSession > 0){
         pTimeFooter.innerHTML = --timeSession
@@ -213,14 +203,33 @@ const setDateTime = () =>{
     else{
         setTimeOutSession()
     }
-}, 1000);*/
+}, 1000);
 
 
 const setTimeOutSession = () =>{
 
     clearInterval(getTimeSession)
+
+    if (!document.hasFocus()){
+
+        setNotification()
+
+        setTimeout(() => {
+            setAlertSession()
+        }, 2000);
+    }
     
+    else{
+        setAlertSession()
+    }
+    
+
+}
+
+const setAlertSession = () =>{
+
     let opt = confirm("Sessão expirada! Deseja cotinuar logado?")
+    console.log(opt)
 
     if(opt){
         location.reload()
@@ -228,7 +237,6 @@ const setTimeOutSession = () =>{
     else{
         logout()
     }
-
 }
 
 const logout = (save = false) =>{
@@ -249,6 +257,19 @@ const init = () =>{
 }
 
 
+
+const setNotification = () =>{
+    let notification = new Notification("Compass - Home",{
+        body: "Sessão expirada em Home Compass."
+    })
+
+    notification.onclick = () => {
+        window.focus()
+    }
+    //=> window.location.href = "http://127.0.0.1:5500/pages/home.html"
+}
+
+
 init()
 
 
@@ -258,3 +279,10 @@ btnLogout.addEventListener("click", ()=>{
 })
 
 
+document.addEventListener('DOMContentLoaded', () =>{
+    if(Notification){
+        if(Notification.permission !== "granted"){
+            Notification.requestPermission()
+        }
+    }
+})

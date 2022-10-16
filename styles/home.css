@@ -90,6 +90,7 @@ main{
 aside{
     width: 30%;
     height: 100%;
+    align-self: flex-end;
    
 
 }
@@ -211,8 +212,15 @@ footer{
 
     background: #fff;
     color: #C13216;
+
+    display: flex;
+    align-items: center;
     
     
+}
+
+.footer__links-container a:first-child:hover{
+    color: #1C1D20;
 }
 
 .footer__links-container button:nth-child(2){
@@ -220,6 +228,9 @@ footer{
     background-color: transparent;
     border-style: none;
     cursor: pointer;
+}
 
+.footer__links-container button:nth-child(2):hover{
+    color: #C13216
 }
 
