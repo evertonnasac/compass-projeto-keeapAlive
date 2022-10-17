@@ -11,18 +11,27 @@ let user = {
 }
 
 const getLocalStorage = () => {
-    let userSave = JSON.parse(localStorage.getItem("login"))
 
-    if(userSave){
+    if(localStorage.getItem("login")){
+
+        location.href = "./pages/home.html" 
+        return
+
+    }
+
+    /*if(userSave){
+
+        location.href = "./pages/home.html"
+    
         inputLogin.value = userSave.login
         inputPass.value = userSave.password
 
         iconLogin.classList.add("icon-animation")
         iconPass.classList.add("icon-animation")
-    }
+    }*/
 }
 
-const getInputs = () =>{
+const getValueInputs = () =>{
 
     let login = inputLogin.value
     let password = inputPass.value
@@ -42,7 +51,7 @@ const auth = (login, password) =>{
 
         localStorage.setItem("login", JSON.stringify(user))
 
-        location.href = "./pages/home.html"
+        location.href = "./pages/home.html?q=login"
 
     }
     else{
@@ -107,10 +116,10 @@ inputPass.addEventListener("focus",reset)
 inputPass.addEventListener("keyup", function(e){
     if(e.key == "Enter"){
         this.blur()
-        getInputs()
+        getValueInputs()
     }
 })
 
 getLocalStorage()
 
-btnContinue.addEventListener("click", getInputs)
+btnContinue.addEventListener("click", getValueInputs)

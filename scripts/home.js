@@ -12,7 +12,7 @@ const btnLogout = $(".footer__logout")
 
 
 //Tempo da sessão 
-let timeSession = 10
+let timeSession = 15
 pTimeFooter.innerHTML = timeSession
 
 
@@ -100,9 +100,7 @@ const filterDataWeather = (values) => {
    let city = address["city"] || address["town"] || display_name.split(",")[0]
    console.log("cidade aqui", city)
   
-   let stateInitial = address["ISO3166-2-lvl4"].split("-").pop()
-   
-  
+   let stateInitial = address["ISO3166-2-lvl4"].split("-").pop() || ""
 
    //console.log(city[0].state.toLowerCase())
 
@@ -211,7 +209,7 @@ const setDateTime = () =>{
     pDate.innerHTML = date
 }
 
-/*
+
 const getTimeSession =  setInterval(() => {
 
     if(timeSession > 0){
@@ -222,7 +220,7 @@ const getTimeSession =  setInterval(() => {
     }
 }, 1000);
 
-/*
+
 const setTimeOutSession = () =>{
 
     clearInterval(getTimeSession)
@@ -231,9 +229,9 @@ const setTimeOutSession = () =>{
 
         setNotification()
 
-        setTimeout(() => {
+        /*setTimeout(() => {
             setAlertSession()
-        }, 2000);
+        }, 2000);*/
     }
     
     else{
@@ -241,7 +239,7 @@ const setTimeOutSession = () =>{
     }
     
 
-}*/
+}
 
 const setAlertSession = () =>{
 
@@ -263,7 +261,7 @@ const logout = (save = false) =>{
         localStorage.removeItem("login")
     }
 
-    location.href = "../../index.html"
+    location.replace("https://www.uol.com.br/")
 }
 
 const init = () =>{
@@ -276,7 +274,10 @@ const init = () =>{
 
 
 const setNotification = () =>{
+
     let notification = new Notification("Compass - Home",{
+
+        icon: "https://logospng.org/download/uol/logo-uol-icon-1024.png",
         body: "Sessão expirada em Home Compass."
     })
 
@@ -301,5 +302,11 @@ document.addEventListener('DOMContentLoaded', () =>{
         if(Notification.permission !== "granted"){
             Notification.requestPermission()
         }
+    }
+})
+
+window.addEventListener("focus", () =>{
+    if (timeSession <=0 ){
+        setTimeout(setAlertSession, 1000)
     }
 })
