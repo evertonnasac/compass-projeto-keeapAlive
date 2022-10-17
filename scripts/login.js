@@ -5,6 +5,8 @@ const iconLogin = document.querySelector(".icon-login")
 const iconPass = document.querySelector(".icon-password")
 const pMsgErr = document.querySelector(".msg-err")
 
+
+//Dados de usuario e senha válidos
 let user = {
     login: "admin",
     password: "admin"
@@ -19,18 +21,9 @@ const getLocalStorage = () => {
 
     }
 
-    /*if(userSave){
-
-        location.href = "./pages/home.html"
-    
-        inputLogin.value = userSave.login
-        inputPass.value = userSave.password
-
-        iconLogin.classList.add("icon-animation")
-        iconPass.classList.add("icon-animation")
-    }*/
 }
 
+//Pegando e validando o valor dos campos de login e senha
 const getValueInputs = () =>{
 
     let login = inputLogin.value
@@ -44,6 +37,7 @@ const getValueInputs = () =>{
     auth(login, password)
 }
 
+//Verificando e autenicando o login
 const auth = (login, password) =>{
 
    
@@ -51,7 +45,7 @@ const auth = (login, password) =>{
 
         localStorage.setItem("login", JSON.stringify(user))
 
-        location.href = "./pages/home.html?q=login"
+        location.href = "./pages/home.html"
 
     }
     else{
@@ -59,8 +53,7 @@ const auth = (login, password) =>{
     }
 }
 
-
-
+//Renderizando a mensagem de erro na autenticação
 const setError = (message) =>{
 
     pMsgErr.innerHTML = message
@@ -78,6 +71,7 @@ const setError = (message) =>{
 
 }
 
+//Resetando os campos  e a mensagem de erro
 const reset = () =>{
 
     pMsgErr.innerHTML = ""
@@ -89,6 +83,7 @@ const reset = () =>{
 }
 
 
+//Função para animar os incones de login e senha
 const changePositionIconInput = (target, img) =>{
 
 
@@ -100,7 +95,7 @@ const changePositionIconInput = (target, img) =>{
     }
 }
 
-
+//..........................Listener de eventos..............................
 inputLogin.addEventListener("keyup", (e)=>{
   changePositionIconInput(e.target, iconLogin)
 })
@@ -120,6 +115,8 @@ inputPass.addEventListener("keyup", function(e){
     }
 })
 
+btnContinue.addEventListener("click", getValueInputs)
+
+//Iniciando a aplicação verificando o localstorage
 getLocalStorage()
 
-btnContinue.addEventListener("click", getValueInputs)
