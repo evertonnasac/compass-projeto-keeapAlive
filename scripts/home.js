@@ -55,19 +55,26 @@ const geoError = () =>{
 const getWeather = (lat, lon)=>{
 
     const key = "c85c800507b036d7fa63f60c7a49ed39"
+    const key2 = "16b970af18b244c7b6e124026221610"
     const lang = "pt-br"
 
     //URI da api do tempo
     const urlWeather = 
     `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}`+
-    `&appid=${key}&lang=${lang}&units=metric`
+    `&appid=${key2}&lang=${lang}&units=metric`
+
+
+    const url = `http://api.weatherapi.com/v1/current.json?key=${key2}&q=${lat},${lon}`
+
+    const urlLocale2 = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}`+
+                        `&format=json`
 
     //URI da API geolocalização
     const urlLocale = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}`+
     `&lon=${lon}&limit=${1}&appid=${key}`
 
     //Fazendo as chamadas das APIs para consultar o tempo e o nome da cidade
-    Promise.all([fetchApi(urlWeather), fetchApi(urlLocale)])
+    Promise.all([fetchApi(url), fetchApi(urlLocale2)])
         .then(values => filterDataWeather(values))
         .catch(geoError)
 }
@@ -85,22 +92,31 @@ const fetchApi = (url) => {
 //Trata os dados da consulta da API do tempo
 const filterDataWeather = (values) => {
 
-   let [weat, city] = values
-   let stateInitial
+   console.log(values)
+   let [weat, locale] = values
+   let {current} = weat
 
-   console.log(city[0].state.toLowerCase())
+   let {address, display_name} = locale
+   let city = address["city"] || address["town"] || display_name.split(",")[0]
+   console.log("cidade aqui", city)
+  
+   let stateInitial = address["ISO3166-2-lvl4"].split("-").pop()
+   
+  
+
+   //console.log(city[0].state.toLowerCase())
 
    //Verificando se tem a propriedade estado na resposta da API
-    city[0].hasOwnProperty("state") ? 
+   /* city[0].hasOwnProperty("state") ? 
         stateInitial = getState(city[0].state.toLowerCase()) : 
         stateInitial = ""
 
-    console.log(weat, city)
+    console.log(weat, city)*/
     
     let infoWeather = {
-        weather : Math.trunc(weat.main.temp), //Temperatura em celcius
-        city: `${city[0].name}${stateInitial}`, //Nome da cidade e a sigla do estado
-        icon: weat.weather[0].icon //codigo do incone do tempo
+        weather : Math.trunc(current["temp_c"]), //Temperatura em celcius
+        city: `${city} - ${stateInitial}`, //Nome da cidade e a sigla do estado
+        icon: current["condition"]["icon"] //codigo do incone do tempo
     }
 
     //Chamando a função que renderiza os dados passados no parâmertro
@@ -155,7 +171,7 @@ const renderWeather = ({weather, city, icon }) =>{
     
     const render = `<p class="header__city">${city}</p>
     <div class="header__weather-container">
-        <img src = http://openweathermap.org/img/wn/${icon}.png alt="Incone" class="icon-weather">
+        <img src = ${icon} alt="Incone" class="icon-weather">
         <p class="info-weather">${weather}°</p>
     </div>`
 
@@ -195,6 +211,7 @@ const setDateTime = () =>{
     pDate.innerHTML = date
 }
 
+/*
 const getTimeSession =  setInterval(() => {
 
     if(timeSession > 0){
@@ -205,7 +222,7 @@ const getTimeSession =  setInterval(() => {
     }
 }, 1000);
 
-
+/*
 const setTimeOutSession = () =>{
 
     clearInterval(getTimeSession)
@@ -224,7 +241,7 @@ const setTimeOutSession = () =>{
     }
     
 
-}
+}*/
 
 const setAlertSession = () =>{
 
