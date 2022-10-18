@@ -29,7 +29,6 @@ main{
     justify-content: center;
     gap: 5%;
     align-items: center;
-
     background: linear-gradient(180deg, #33383D 0%, #1C1D20 100%);
 }
 
@@ -97,7 +96,6 @@ input{
 .msg-err{
     color: #E9B425;
     font-size: 14px;
-    width: 40% ;
     visibility: hidden;
     height: 50px;
     text-align: center;
@@ -125,8 +123,8 @@ button{
     border-radius: 50px;
 
     position: relative;
-    right: 5%;
-    
+    right: 4%;
+    bottom: 4%;
     cursor: pointer;
 }
 
